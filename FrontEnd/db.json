@@ -1,0 +1,52 @@
+{
+    "user": 
+    [
+      { 
+        "id": "", 
+        "name": "", 
+        "email": "", 
+        "phone": "", 
+        "password": "" 
+    }
+    ],
+    "profile": 
+    [
+      { 
+        "id": "", 
+        "user_id": "", 
+        "avatar":"",
+        "commitment_time": "", 
+        "career_path": "", 
+        "notification_type": "", 
+        "mood": "" 
+    }
+    ],
+    "goal": 
+    [
+      {
+        "id": "",
+        "user_id": "",
+        "title": "",
+        "description": "",
+        "start_date": "",
+        "end_date": "",
+        "status": "",
+        "unit": "",
+        "frequency": "",
+        "goal_target": "",
+        "alert_time": "",
+        "method": ""
+      }
+    ],
+    "progressUpdate": 
+    [
+      { 
+        "id": "", 
+        "goal_id": "", 
+        "date": "", 
+        "metric_value": "", 
+        "notes": "" 
+    }
+    ]
+}
+  
