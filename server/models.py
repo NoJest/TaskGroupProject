@@ -31,7 +31,7 @@ class User(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key = True )
     email = db.Column(db.String, unique=True, nullable=False)
     phone = db.Column(db.Integer, unique=True, nullable=False)
-    password_hash = db.Colunm(db.string)
+    password_hash = db.Colunm(db.String)
 # Models go here!
 
 class Preference(db.Model, SerializerMixin):
@@ -40,7 +40,6 @@ class Preference(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key= True)
     commitment_time = db.Column(db.String)
     career_path = db.Column(db.Integer)
-    notification_type = db.Column (db.String)
     avatar = db.Column (db.String, nullable =True)
     # mood = db.Column(db.String)
     # Stretch goal
@@ -57,5 +56,5 @@ class ProgressUpdate(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     date = db.Column(db.Date, nullable=False)
     metric_value = db.Column(db.String, nullable=False)
-    notes = db.Column(db.text)
+    notes = db.Column(db.Text)
 
