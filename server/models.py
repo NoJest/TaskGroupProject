@@ -7,9 +7,9 @@ class Preference(db.Model, SerializerMixin):
     __tablename__ = "preference_table"
     
     id = db.Column(db.Integer, primary_key= True)
-    commitment_time = db.Column(db.String, nullable = False)
+    commitment_time = db.Column(db.String)
     career_path = db.Column(db.Integer)
-    notification_type = db.Column (db.String(40))
+    notification_type = db.Column (db.String)
     # mood = db.Column(db.String)
     # Stretch goal
     
