@@ -3,8 +3,8 @@ from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy.orm import validates
 from config import db
 
-class Preferences(db.Model, SerializerMixin):
-    __tablename__ = "profile_table"
+class Preference(db.Model, SerializerMixin):
+    __tablename__ = "preference_table"
     
     id = db.Column(db.Integer, primary_key= True)
     commitment_time = db.Column(db.String, nullable = False)
