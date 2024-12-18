@@ -2,13 +2,19 @@ import React, { Children } from 'react';
 import App from './App'
 import LoginForm from './LoginForm';
 import SignUp from './SignUp';
+import Dashboard from './Dashboard';
 
 
 
 const routes = [
     {
         path: "/dashboard",
-        element: <App />,
+        element: <Dashboard />,
+    },
+    {
+        path:"/SignUp",
+        element:<SignUp/>
+
     },
     {
         path: "/",
@@ -18,14 +24,11 @@ const routes = [
                 path: "login",
                 element: <LoginForm />
             },
-            {
-                path: "signUp",
-                element: <SignUp/>
-            },
-    //         {
+         
+    //       {
     //             path: "event",
     //             element: <EventContainer/>
-    //         },
+    //        },
     //         {
     //             path: "event/:id",
     //             element: <EventsPage/>
