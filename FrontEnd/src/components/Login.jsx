@@ -1,1 +1,0 @@
-//create a login controlled form with email and password as inputs with async post fetch to (./api/login) and add a state of currentUser as well to initiate the current user.
