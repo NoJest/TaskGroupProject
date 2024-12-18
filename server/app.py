@@ -1,19 +1,36 @@
 #!/usr/bin/env python3
-
 from flask import request, session
 from flask_restful import Resource
 from config import app, db, api
 from models import db, User, Goal, Preference, ProgressUpdate
 
 
+def find_user_by_id(user_id):
+    return User.query.where(User.id == user_id).first()
+def find_preferences_by_id(user_id):
+    return Preference.query.where(Preference.user_id == user_id).first()
 
-# Views go here!
 
-@app.route('/')
-def index():
-    return '<h1>Project Server</h1>'
+# Preferences
+@app.get("/preferences/<int:user_id>")
+def get_preferences_by_id(user_id):
+    #1 find user with that id
+    found_user = find_user_by_id(user_id)
+    
+       #too troubleshoot for none ids 
+    if found_user:
+        
+    #2 send it to the (client)
+        return found_user.preferences.to_dict(), 200
+    
+    else:
+        #3 send a 404 if it doesnt exist
+        return {"status": 404, "message": "NOT FOUND" }, 404
 
-@app.post('/api/users')
+
+
+#authentication and user login
+@app.post('/api/user')
 def create_user():
     data = request.json
     try:
