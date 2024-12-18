@@ -1,25 +1,27 @@
 import React, { Children } from 'react';
 import App from './App'
+import LoginForm from './LoginForm';
+import SignUp from './SignUp';
 
 
 
 const routes = [
     {
-        path: "/",
+        path: "/dashboard",
         element: <App />,
     },
     {
-        path: "/home",
+        path: "/",
         element: <App />,
         children:[
-    //         {
-    //             path: "search",
-    //             element: <Search />
-    //         },
-    //         {
-    //             path: "create",
-    //             element: <Create/>
-    //         },
+            {
+                path: "login",
+                element: <LoginForm />
+            },
+            {
+                path: "signUp",
+                element: <SignUp/>
+            },
     //         {
     //             path: "event",
     //             element: <EventContainer/>
