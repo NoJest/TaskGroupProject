@@ -58,17 +58,18 @@ def create_new_preferences():
             "error_text": str(error)
             }, 400
 
-#delete request 
-@app.delete('/api/preferences/<int:user_id>')
-def delete_preferences_by_id(user_id):
-    found_preferences = find_user_by_id(user_id)
-    if found_preferences:
-        db.session.delete(found_preferences)
-        db.session.commit()
-        return {}, 204
-    #204 stands for no content, so empty message
-    else:
-        return {"status": 404, "message": "NOT FOUND" }, 404
+#dont think we need this but if we do i need to fix the logic here
+# #delete request 
+# @app.delete('/api/preferences/<int:user_id>')
+# def delete_preferences_by_id(user_id):
+#     found_preferences=Preference.query.get(user_id)
+#     if found_preferences:
+#         db.session.delete(found_preferences)
+#         db.session.commit()
+#         return {}, 204
+#     #204 stands for no content, so empty message
+#     else:
+#         return {"status": 404, "message": "NOT FOUND" }, 404
     
 #patch request
 @app.patch('/api/preferences/<int:user_id>')
