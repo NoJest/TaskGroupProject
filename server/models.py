@@ -177,7 +177,7 @@ class ProgressUpdate(db.Model, SerializerMixin):
     __tablename__ = 'progress_update_table'
 
     id = db.Column(db.Integer, primary_key=True)
-    date = db.Column(db.Date, nullable=False)
+    date = db.Column(db.Date, nullable=False, default=date.today)
     metric_value = db.Column(db.String, nullable=False)
     notes = db.Column(db.Text)
 
