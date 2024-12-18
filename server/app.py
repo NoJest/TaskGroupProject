@@ -181,7 +181,55 @@ def create_new_user_goal():
 
 @app.patch("/api/goals/<int:id>")
 def edit_goal(id):
-    goal = Goal.query.get(id) 
+    goal = Goal.query.get(id)
+
+    if goal:
+        try: 
+            data = request.json
+
+            for attr, value in data.items(): 
+                if hasattr(goal, attr):
+                    setattr(goal, attr, value)
+                else: 
+                    return {"status": 400, "message": f"Invalid attribute: {attr}"}, 400
+            db.session.commit()
+            return goal.to_dict(), 202
+        
+        except Exception as e:
+            return {"status": 400, "message": f"An error occurred: {str(e)}"}, 400
+    else:
+        return {"status": 404, "message": "Goal not found"}, 404
+
+
+
+# @app.patch('/api/preferences/<int:user_id>')
+# def edit_preferences(user_id):
+#     found_user= find_user_by_id(user_id)
+    
+#     if found_user:
+#         #find preferences for this user
+#         preferences = find_preferences_by_id(user_id)
+        
+#         if preferences:
+#             try:
+#                 data = request.json
+#                 for found_preference in preferences:
+#                     for key, value in data.items():
+#                         if hasattr(found_preference,key):
+#                             setattr(found_preference, key, value)
+#                 db.session.commit()
+#                 updated_preferences = [pref.to_dict() for pref in preferences]
+#                 return jsonify(updated_preferences),202
+        
+#             except Exception as e:
+#                 return { "status": 400, 
+#                         "message": "Something is amiss updating preferences",
+#                         "error_text": str(e)}, 400
+#         else: 
+#             return { "status": 404, 
+#                         "message": "No preferences for this user"}, 400
+#     else:
+#         return {"status": 404, "message": "User not found"}, 404   
 
 
 @app.delete("/api/goals/<int:id>")
