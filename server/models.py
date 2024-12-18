@@ -68,6 +68,7 @@ class Preference(db.Model, SerializerMixin):
     # mood = db.Column(db.String)
     # Stretch goal
     
+    user_id = db.Column(db.Integer, db.ForeignKey("users_table.id"))
     # Relationships here
     # users = db.relationship('User', back_populates = "preferences")
     

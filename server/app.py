@@ -7,23 +7,21 @@ from models import db, User, Goal, Preference, ProgressUpdate
 
 def find_user_by_id(user_id):
     return User.query.where(User.id == user_id).first()
-# Views go here!
+def find_preferences_by_id(user_id):
+    return Preference.query.where(Preference.user_id == user_id).first()
 
-@app.route('/')
-def index():
-    return '<h1>Project Server</h1>'
 
 # Preferences
 @app.get("/preferences/<int:user_id>")
 def get_preferences_by_id(user_id):
-    #1 find landlord with that id
-    found_user = find_landlord_by_id(landlord_id)
+    #1 find user with that id
+    found_user = find_user_by_id(user_id)
     
        #too troubleshoot for none ids 
-    if found_landlord:
+    if found_user:
         
-    #2 send it to the user (client)
-        return found_landlord.to_dict(), 200
+    #2 send it to the (client)
+        return found_user.preferences.to_dict(), 200
     
     else:
         #3 send a 404 if it doesnt exist
