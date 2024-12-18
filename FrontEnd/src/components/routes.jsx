@@ -3,6 +3,8 @@ import App from './App'
 import LoginForm from './LoginForm';
 import SignUp from './SignUp';
 import Dashboard from './Dashboard';
+import Home from './Home';
+
 
 
 
@@ -25,10 +27,10 @@ const routes = [
                 element: <LoginForm />
             },
          
-    //       {
-    //             path: "event",
-    //             element: <EventContainer/>
-    //        },
+          {
+              path: "home",
+              element: <Home/>
+           },
     //         {
     //             path: "event/:id",
     //             element: <EventsPage/>
