@@ -32,7 +32,7 @@ class User(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key = True )
     email = db.Column(db.String, unique=True, nullable=False)
     phone = db.Column(db.Integer, unique=True, nullable=False)
-    password_hash = db.Colunm(db.String)
+    password_hash = db.Column(db.String)
     
     @property
     def password(self): 
