@@ -4,12 +4,13 @@ from flask_restful import Resource
 from config import app, db, api
 from models import db, User, Goal, Preference, ProgressUpdate
 
-
+# HELPER FUNCTIONS
 def find_user_by_id(user_id):
     return User.query.where(User.id == user_id).first()
 def find_preferences_by_id(user_id):
-    return Preference.query.where(Preference.user_id == user_id).all()
-
+  return Preference.query.where(Preference.user_id == user_id).all()
+def find_goals_by_id(user_id):
+    return Goal.query.where(Goal.user_id == user_id).all()
 
 # Preferences
 #get request
@@ -141,7 +142,60 @@ def logout():
     return {}, 204
 
 
+
+# Goals CRUD
+@app.get('/api/users/<int:user_id>/goals')
+def get_goals_by_user(user_id):
+    found_user_goals = find_goals_by_id(user_id) 
+
+    if found_user_goals:
+        return found_user_goals.to_dict(), 200
+    else:
+        return { "status": 404, "message": "NOT FOUND" }, 404
+
+@app.post("/api/users/<int:user_id>/goals")
+def create_new_user_goal():
+    data = request.json
+    
+    try: 
+        new_goal = Goal(title = data.get('title'),
+                        description = data.get('description'),
+                        start_date = data.get('start_date'),
+                        end_date = data.get('end_date'),
+                        status = data.get('status'),
+                        unit = data.get('unit'),
+                        frequency = data.get('frequency'),
+                        goal_target = data.get('goal_target'),
+                        alert_time = data.get('alert_time'),
+                        phone_alert = data.get('phone_alert'),
+                        email_alert = data.get('email_alert'))
+        db.session.add(new_goal)
+        db.session.commit()
+        return new_goal.to_dict(), 201
+    
+    except Exception as error:
+        return{"status": 400, 
+               "message": "something went wrong...", 
+               "error_text": str(error)
+               }, 400
+
+@app.patch("/api/goals/<int:id>")
+def edit_goal(id):
+    goal = Goal.query.get(id) 
+
+
+@app.delete("/api/goals/<int:id>")
+def delete_goal(id):
+    goal = Goal.query.get(id)
+
+    if goal:
+        db.session.delete(goal)
+        db.session.commit()
+        return {}, 204
+    else: 
+        return {"status" : 404, "message": "NOT FOUND"}, 404
+
+# ProgressUpdate CRUD
+
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
-
-
