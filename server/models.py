@@ -29,7 +29,7 @@ class Goal(db.Model, SerializerMixin):
     
     #relationships
     progress_updates = db.relationship("ProgressUpdate", back_populates="goal", cascade= "all, delete-orphan" )
-    user = db.relationship('User', back_populates="goals", cascade = "all, delete-orphan")
+    user = db.relationship('User', back_populates="goals")
     
     #serializin
     serialize_rules = ('-user.goals',"-progress_updates.goal")
@@ -69,7 +69,7 @@ class User(db.Model, SerializerMixin):
     __tablename__= 'users_table'
 
     id = db.Column(db.Integer, primary_key = True )
-    name = db.Column(db.String, nullable=False)
+    name= db.Column (db.Integer, unique=True, nullable= False)
     email = db.Column(db.String, unique=True, nullable=False)
     phone = db.Column(db.String, unique=True, nullable=False)
     password_hash = db.Column(db.String)
@@ -117,20 +117,19 @@ class User(db.Model, SerializerMixin):
         existing_user = User.query.filter_by(phone=phone).first()
         if existing_user:
             raise ValueError("Phone number is already taken")
+        
+           # Adjust phone validation to allow optional spaces, hyphens, or parentheses
+        if not re.match(r"^(\+?\d{1,4}[-\s]?)?(\(?\d{1,3}\)?[-\s]?)?(\d{1,4}[-\s]?\d{1,4}[-\s]?\d{1,4})$", phone):
+            raise ValueError("Invalid phone number format. It should contain 10 to 15 digits.")
+    
         return phone
+    
     # Validation for email and phone
     @validates('email')
     def validate_email(self, key, email):
         if not re.match(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$", email):
             raise ValueError("Invalid email format")
         return email
-
-    @validates('phone')
-    def validate_phone(self, key, phone):
-         # Adjust phone validation to allow optional spaces, hyphens, or parentheses
-        if not re.match(r"^\+?\d{10,15}$", phone):
-            raise ValueError("Invalid phone number format")
-        return phone
     
      # Debugging __repr__ method
     def __repr__(self):

@@ -3,6 +3,8 @@ from flask import request, session, jsonify
 from flask_restful import Resource
 from config import app, db, api
 from models import db, User, Goal, Preference, ProgressUpdate
+from werkzeug.exceptions import BadRequest
+from sqlalchemy.exc import IntegrityError
 
 # HELPER FUNCTIONS
 def find_user_by_id(user_id):
@@ -113,15 +115,33 @@ def edit_preferences(user_id):
 @app.post('/api/users')
 def create_user():
     data = request.json
+    required_fields = ['email','phone','name','password']
+    for field in required_fields:
+        if field not in data:
+            return {"error": f"missing required field: {field}"}, 400
     try:
-        new_user.name = User(name=data['name'])
-        new_user.email=data['email']
-        new_user.phone = data ['phone']
-        new_user.password = data['password']
+        new_user = User(
+            email=data['email'],
+            phone = data ['phone'],
+            name = data ['name'],
+            password = data['password']
+        )
         db.session.add(new_user)
         db.session.commit()
         session["user_id"] = new_user.id  
-        return new_user.to_dict(), 201
+        return new_user.to_dict(rules=("-password_hash",)), 201
+    
+    except IntegrityError as e:
+        db.session.rollback()  # Rollback the session in case of error
+        # Handle duplicate email or phone errors
+        if 'email' in str(e.orig) or 'phone' in str(e.orig):
+            return {'error': 'Email or phone number already in use.'}, 400
+        return {'error': str(e.orig)}, 400
+
+    except BadRequest as e:
+        # Handle invalid JSON or malformed requests
+        return {'error': 'Bad request. Please check your input.'}, 400
+    
     except Exception as e:
         return { 'error': str(e) }, 400
 
