@@ -69,8 +69,8 @@ class User(db.Model, SerializerMixin):
     __tablename__= 'users_table'
 
     id = db.Column(db.Integer, primary_key = True )
-    email = db.Column(db.String, unique=True, nullable=False, unique=True)
-    phone = db.Column(db.String, unique=True, nullable=False, unique=True)
+    email = db.Column(db.String, unique=True, nullable=False)
+    phone = db.Column(db.String, unique=True, nullable=False)
     password_hash = db.Column(db.String)
     
     #relationships
@@ -184,7 +184,7 @@ class ProgressUpdate(db.Model, SerializerMixin):
     notes = db.Column(db.Text)
 
     #foreign key
-    goal_id = db.Column(db.Integer, db.ForeignKey("goals_table"))
+    goal_id = db.Column(db.Integer, db.ForeignKey("goals_table.id"))
     
     #relationship 
     goal = db.relationship('Goal', back_populates="progress_updates")
