@@ -11,6 +11,8 @@ def find_preferences_by_id(user_id):
   return Preference.query.where(Preference.user_id == user_id).all()
 def find_goals_by_id(user_id):
     return Goal.query.where(Goal.user_id == user_id).all()
+def find_updates_by_id(goal_id):
+    return ProgressUpdate.query.where(ProgressUpdate.goal_id == goal_id).all()
 
 # Preferences
 #get request
@@ -82,7 +84,11 @@ def edit_preferences(user_id):
         
         if preferences:
             try:
-                data = request.json
+                data = request.get_json()
+                print(data) #debugging
+                if not data:
+                    return {"status":400,
+                            "message": "Invalid or empty JSON in request" }, 400
                 for found_preference in preferences:
                     for key, value in data.items():
                         if hasattr(found_preference,key):
@@ -201,38 +207,6 @@ def edit_goal(id):
     else:
         return {"status": 404, "message": "Goal not found"}, 404
 
-
-
-# @app.patch('/api/preferences/<int:user_id>')
-# def edit_preferences(user_id):
-#     found_user= find_user_by_id(user_id)
-    
-#     if found_user:
-#         #find preferences for this user
-#         preferences = find_preferences_by_id(user_id)
-        
-#         if preferences:
-#             try:
-#                 data = request.json
-#                 for found_preference in preferences:
-#                     for key, value in data.items():
-#                         if hasattr(found_preference,key):
-#                             setattr(found_preference, key, value)
-#                 db.session.commit()
-#                 updated_preferences = [pref.to_dict() for pref in preferences]
-#                 return jsonify(updated_preferences),202
-        
-#             except Exception as e:
-#                 return { "status": 400, 
-#                         "message": "Something is amiss updating preferences",
-#                         "error_text": str(e)}, 400
-#         else: 
-#             return { "status": 404, 
-#                         "message": "No preferences for this user"}, 400
-#     else:
-#         return {"status": 404, "message": "User not found"}, 404   
-
-
 @app.delete("/api/goals/<int:id>")
 def delete_goal(id):
     goal = Goal.query.get(id)
@@ -244,7 +218,68 @@ def delete_goal(id):
     else: 
         return {"status" : 404, "message": "NOT FOUND"}, 404
 
+
+
 # ProgressUpdate CRUD
+@app.get("/api/goals/<int:goal_id>/progress-updates")
+def get_progress_updates(goal_id):
+    found_progress_updates = find_updates_by_id(goal_id) 
+
+    if found_progress_updates: 
+        return found_progress_updates.to_dict(), 200
+    else: 
+        return { "status": 404, "message": "NOT FOUND"}, 404
+
+@app.post("/api/goals/<int:goal_id>/progress-updates")
+def create_new_progress_update(): 
+    data = request.json
+
+    try: 
+        new_update = ProgressUpdate(date = data.get('date'),
+                                    metric_value = data.get('metric_value'),
+                                    notes = data.get('notes'))
+        db.session.add(new_update)
+        db.session.commit()
+        return new_update.to_dict(), 201
+    
+    except Exception as e:
+        return{"status": 400,
+               "message": "something went wrong...",
+               "error_text": str(error)
+               }, 400
+
+@app.patch("/api/progress-updates/<int:id>")
+def edit_progress_update(id):
+    update = ProgressUpdate.query.get(id)
+
+    if update: 
+        try: 
+            data = request.json
+
+            for attr, value in data.items():
+                if hasattr(update, attr):
+                    setattr(update, attr, value)
+                else: 
+                    return {"status": 400, "message": f"Invalid attribute: {attr}"}, 400
+                db.session.commit()
+                return update.to_dict(), 202
+            
+        except Exception as e: 
+            return {"status": 404, "message": f"An error occurred: {str(e)}"}, 400
+    else:
+        return {"status": 404, "message": "Update not found"}, 404
+
+@app.delete("/api/progress-updates/<int:id>")
+def delete_progress_update(id):
+    update = ProgressUpdate.query.get(id)
+
+    if update:
+        db.session.delete(update)
+        db.session.commit()
+        return {}, 204
+    else:
+        return {"status": 404, "message": "NOT FOUND"}, 404
+
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

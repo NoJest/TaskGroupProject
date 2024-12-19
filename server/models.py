@@ -69,8 +69,8 @@ class User(db.Model, SerializerMixin):
     __tablename__= 'users_table'
 
     id = db.Column(db.Integer, primary_key = True )
-    email = db.Column(db.String, unique=True, nullable=False, unique=True)
-    phone = db.Column(db.String, unique=True, nullable=False, unique=True)
+    email = db.Column(db.String, unique=True, nullable=False)
+    phone = db.Column(db.String, unique=True, nullable=False)
     password_hash = db.Column(db.String)
     
     #relationships
@@ -161,6 +161,8 @@ class Preference(db.Model, SerializerMixin):
     #     if not re.match(r"^\d+\s*(hours|hour)\s*(\/week|\/month)$", commitment_time):
     #         raise ValueError("Invalid commitment time format. Example: '3 hours/week'")
     #     return commitment_time
+    
+    #probably want to leave it open ended,but this is an example
     # @validates('career_path')
     # def validate_career_path(self, key, career_path):
     #     valid_paths = ["Software Engineer", "Data Scientist", "Product Manager"]
@@ -182,7 +184,7 @@ class ProgressUpdate(db.Model, SerializerMixin):
     notes = db.Column(db.Text)
 
     #foreign key
-    goal_id = db.Column(db.Integer, db.ForeignKey("goals_table"))
+    goal_id = db.Column(db.Integer, db.ForeignKey("goals_table.id"))
     
     #relationship 
     goal = db.relationship('Goal', back_populates="progress_updates")
