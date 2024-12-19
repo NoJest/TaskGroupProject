@@ -4,6 +4,7 @@ import LoginForm from './LoginForm';
 import SignUp from './SignUp';
 import Dashboard from './Dashboard';
 import Home from './Home';
+import PopUpProfile from './PopUpProfile'
 
 
 
@@ -19,6 +20,10 @@ const routes = [
 
     },
     {
+        path:"/profile",
+        element:<PopUpProfile/>
+    },
+    {
         path: "/",
         element: <App />,
         children:[
@@ -31,6 +36,7 @@ const routes = [
               path: "home",
               element: <Home/>
            },
+         
     //         {
     //             path: "event/:id",
     //             element: <EventsPage/>

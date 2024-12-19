@@ -45,7 +45,7 @@ const SignUp = () => {
         const data = await response.json();
         setCurrentUser(data);
         alert("Sign-up successful!");
-        navigate('/dashboard')
+        navigate('/profile')
         setIsVisible(false); // Hide the form after submission
       } else {
         alert("Invalid email or password");
