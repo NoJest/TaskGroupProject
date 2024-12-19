@@ -3,6 +3,22 @@ import Bg2 from "./Bg2";
 import Bg3 from "./BG3.JSX";
 import { Navigate, useNavigate } from "react-router-dom";
 
+const Alert = ({ message, type, onClose }) => {
+  return (
+    <div
+      className={`fixed top-5 right-5 z-50 p-4 rounded-md shadow-lg bg-${type === "success" ? "green-500" : "red-500"} text-white flex items-center justify-between`}
+    >
+      <span>{message}</span>
+      <button
+        className="ml-4 text-white bg-transparent hover:bg-white hover:text-red-500 rounded-md p-1"
+        onClick={onClose}
+      >
+        ✖
+      </button>
+    </div>
+  );
+};
+
 const SignUp = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -13,6 +29,7 @@ const SignUp = () => {
   const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false); // State for submission process
   const [isVisible, setIsVisible] = useState(false); // State to control form visibility
+  const [alert, setAlert] = useState(null); // Alert state
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -25,7 +42,7 @@ const SignUp = () => {
     e.preventDefault();
 
     if (password !== confirmPassword) {
-      setError("Passwords do not match!");
+      setAlert({ message: "Passwords do not match!", type: "error" });
       return;
     }
 
@@ -44,15 +61,15 @@ const SignUp = () => {
       if (response.ok) {
         const data = await response.json();
         setCurrentUser(data);
-        alert("Sign-up successful!");
+        setAlert({ message: "Sign-up successful!", type: "success" });
         navigate('/profile')
         setIsVisible(false); // Hide the form after submission
       } else {
-        alert("Invalid email or password");
+        setAlert({ message: "Invalid email or password", type: "error" });
       }
     } catch (err) {
       console.error("Error during sign-up:", err);
-      alert("Something went wrong. Please try again.");
+      setAlert({ message: "Something went wrong. Please try again.", type: "error" });
     } finally {
       setIsSubmitting(false); // End submission process
     }
@@ -63,6 +80,14 @@ const SignUp = () => {
       <Bg3 className="absolute inset-0 bg-blue-500 z-0" />
 
       {/* Form Section */}
+      {alert && (
+        <Alert
+          message={alert.message}
+          type={alert.type}
+          onClose={() => setAlert(null)}
+        />
+      )}
+
       <section
         className={`z-10 my-36 max-w-4xl mx-auto py-20 px-10 bg-white rounded-lg shadow-lg dark:bg-gray-800 flex justify-center items-center absolute inset-0 transition-all duration-1000 ease-in-out transform ${
           isVisible ? "opacity-100 scale-100" : "opacity-0 scale-90"
