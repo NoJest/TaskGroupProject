@@ -1,6 +1,27 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 
 const Dashboard = () => {
+
+
+const [currentUser, setCurrentUser] = useState(null) 
+  // we'll partially track the signed in user using state
+
+
+async function check_session() {
+  const response = await fetch('./api/check_session')
+  if (response.status === 200) {
+    const data = await response.json()
+    setCurrentUser(data)
+
+  }
+  
+}
+
+useEffect(()=>{
+  check_session()
+},[])
+
+
   return (
     
     <div className="bg-gray-100 font-sans p-5">

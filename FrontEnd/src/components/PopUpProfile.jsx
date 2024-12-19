@@ -3,12 +3,34 @@ import avatar1 from '../assets/avatar1.png'
 import avatar2 from '../assets/avatar2.png'
 import avatar3 from '../assets/avatar3.png'
 import avatar4 from '../assets/avatar4.png'
+import Bg3 from "./BG3.JSX";
+
 import { Navigate, useNavigate } from 'react-router-dom';
 
 
 
 
 const PopUpProfile = () => {
+
+
+  const [currentUser, setCurrentUser] = useState(null) 
+  // we'll partially track the signed in user using state
+
+
+async function check_session() {
+  const response = await fetch('./api/check_session')
+  if (response.status === 200) {
+    const data = await response.json()
+    setCurrentUser(data)
+
+  }
+  
+}
+
+useEffect(()=>{
+  check_session()
+},[])
+
   const [step, setStep] = useState(1);
   const [isVisible, setIsVisible] = useState(true); // State to control form 
   const navigate = useNavigate()
@@ -61,6 +83,10 @@ const PopUpProfile = () => {
   };
 
   return (
+
+
+    <div>      
+        <Bg3 className="absolute inset-0 bg-blue-500 z-0" />
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
       <div
         className={`bg-white bg-opacity-90 rounded-lg p-6 shadow-lg w-full max-w-4xl transition-transform transform ${isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}
@@ -231,6 +257,8 @@ const PopUpProfile = () => {
         )}
       </div>
     </div>
+    </div>
+
   );
 };
 
