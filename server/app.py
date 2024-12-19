@@ -269,7 +269,7 @@ def edit_progress_update(id):
 def delete_progress_update(id):
     update = ProgressUpdate.query.get(id)
 
-    if goal:
+    if update:
         db.session.delete(update)
         db.session.commit()
         return {}, 204
