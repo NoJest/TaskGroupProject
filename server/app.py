@@ -110,11 +110,12 @@ def edit_preferences(user_id):
 
 
 #authentication and user login
-@app.post('/api/user')
+@app.post('/api/users')
 def create_user():
     data = request.json
     try:
-        new_user = User(email=data['email'])
+        new_user.name = User(name=data['name'])
+        new_user.email=data['email']
         new_user.phone = data ['phone']
         new_user.password = data['password']
         db.session.add(new_user)
