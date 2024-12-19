@@ -1,17 +1,11 @@
-
 import React from 'react';
 
 // Utility function to determine the background color based on progress
 function getBackgroundColor(progress) {
-    if (progress < 30) {
-        return 'bg-red-500'; // Tailwind class for red
-    } else if (progress < 50) {
-        return 'bg-orange-400'; // Tailwind class for orange
-    } else if (progress < 70) {
-        return 'bg-blue-400'; // Tailwind class for blue
-    } else {
-        return 'bg-green-500'; // Tailwind class for green
-    }
+    if (progress < 30) return 'bg-red-500';
+    if (progress < 50) return 'bg-orange-400';
+    if (progress < 70) return 'bg-blue-400';
+    return 'bg-green-500';
 }
 
 function ProgressUpdate() {
@@ -24,8 +18,8 @@ function ProgressUpdate() {
     ];
 
     return (
-        <div className=" absolute my-10 mx-96 w-96 inset-0 overflow-auto bg-gray-100"> {/* Updated tailwind class to make element stay over background */}
-            <h1 className="text-2xl font-semibold text-center text-gray-800 mb-6">Goal Progress</h1>
+        <div className="bg-white p-6 rounded-lg shadow-md w-full">
+            <h1 className="text-2xl font-semibold text-center text-gray-800 mb-6">Progress</h1>
             {goals.map((goal) => (
                 <div key={goal.id} className="mb-4">
                     <div className="flex justify-between mb-1">
@@ -45,5 +39,3 @@ function ProgressUpdate() {
 }
 
 export default ProgressUpdate;
-
-// Updated the tailwind class for the main div to "fixed inset-0 overflow-auto bg-gray-100" to make it stay over the background and fill the available area of the screen.
