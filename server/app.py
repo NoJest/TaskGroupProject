@@ -130,6 +130,7 @@ def create_user():
         db.session.commit()
         session["user_id"] = new_user.id  
         return new_user.to_dict(rules=("-password_hash",)), 201
+    
     except IntegrityError as e:
         db.session.rollback()  # Rollback the session in case of error
         # Handle duplicate email or phone errors
