@@ -84,7 +84,11 @@ def edit_preferences(user_id):
         
         if preferences:
             try:
-                data = request.json
+                data = request.get_json()
+                print(data) #debugging
+                if not data:
+                    return {"status":400,
+                            "message": "Invalid or empty JSON in request" }, 400
                 for found_preference in preferences:
                     for key, value in data.items():
                         if hasattr(found_preference,key):
