@@ -50,7 +50,7 @@ const SignUp = () => {
     setIsSubmitting(true); // Start submission process
 
     try {
-      const response = await fetch("http://localhost:3000/user", {
+      const response = await fetch("./api/users", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
