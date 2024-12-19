@@ -29,3 +29,4 @@ function Bg2() {
 }
 
 export default Bg2
+
