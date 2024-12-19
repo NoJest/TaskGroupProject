@@ -161,6 +161,8 @@ class Preference(db.Model, SerializerMixin):
     #     if not re.match(r"^\d+\s*(hours|hour)\s*(\/week|\/month)$", commitment_time):
     #         raise ValueError("Invalid commitment time format. Example: '3 hours/week'")
     #     return commitment_time
+    
+    #probably want to leave it open ended,but this is an example
     # @validates('career_path')
     # def validate_career_path(self, key, career_path):
     #     valid_paths = ["Software Engineer", "Data Scientist", "Product Manager"]
