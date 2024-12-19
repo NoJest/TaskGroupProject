@@ -21,7 +21,19 @@ useEffect(()=>{
   check_session()
 },[])
 
+if (!currentUser) { // Signup & Login if no currentUser
 
+  return (
+      
+      <div className="flex-row">
+
+        <SignUp setCurrentUser={setCurrentUser} />
+
+      </div>
+  
+  )
+} else { // UserDetails if currentUser
+      
   return (
     
     <div className="bg-gray-100 font-sans p-5">
@@ -94,28 +106,32 @@ useEffect(()=>{
 
 
       {/* Variables */}
-
-const ProgressBar = ({ title, value, percentage }) => (
-  <div className="mb-4">
-    <p className="text-sm font-medium mb-1">
-      {title} - {value}
-    </p>
-    <div className="w-full bg-gray-300 rounded-full h-2">
-      <div
-        className="h-2 bg-blue-500 rounded-full"
-        style={{ width: `${percentage}%` }}
-      ></div>
-    </div>
-  </div>
-);
-
-const ScheduleCard = ({ time, text }) => (
-  <div className="bg-red-50 p-3 rounded-lg mb-2">
-    <span className="text-sm text-red-500 font-semibold">{time}</span>
-    <p className="text-sm text-gray-600">{text}</p>
-  </div>
-);
-
-
-
-export default Dashboard;
+      
+    }
+    
+    
+    
+    
+    const ProgressBar = ({ title, value, percentage }) => (
+      <div className="mb-4">
+        <p className="text-sm font-medium mb-1">
+          {title} - {value}
+        </p>
+        <div className="w-full bg-gray-300 rounded-full h-2">
+          <div
+            className="h-2 bg-blue-500 rounded-full"
+            style={{ width: `${percentage}%` }}
+          ></div>
+        </div>
+      </div>
+    );
+    
+    const ScheduleCard = ({ time, text }) => (
+      <div className="bg-red-50 p-3 rounded-lg mb-2">
+        <span className="text-sm text-red-500 font-semibold">{time}</span>
+        <p className="text-sm text-gray-600">{text}</p>
+      </div>
+    );
+    
+    export default Dashboard;
+    

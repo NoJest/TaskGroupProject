@@ -76,9 +76,55 @@ useEffect(()=>{
     }, 300); // Delay for smooth transition
   };
 
-  const handleSubmit = () => {
-    console.log('Form Data Submitted:', formData);
+  const [profileData, setProfileData] = useState({
+    careerPath: '',
+    notificationType: '',
+    mood: '',
+    commitmentTime: '',
+    avatar: '',
+  });
+  const handleSubmit = async () => {
     // Add logic to send data to backend
+      const response = await fetch('/api/preferences/<int:user_id>', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(profileData),
+      });
+    
+      if (response.ok) {
+        const user = await response.json();
+        // Store profile_id for linking goals later
+        setProfileData(user.id);
+        console.log('Form Data Submitted:', formData);
+
+      }
+    
+    const [goalData, setGoalData] = useState({
+      goalTitle: '',
+      description: '',
+      startDate: '',
+      endDate: '',
+      frequency: '',
+      goalTarget: '',
+    });
+    
+      const r = await fetch('/api/goals', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ ...goalData, profile_id: profileId }),
+      });
+    
+      if (r.ok) {
+        const data = await r.json()
+        setGoalData(data)
+        console.log('Goal saved successfully');
+      }
+    
+    
     navigate('/dashboard')
   };
 

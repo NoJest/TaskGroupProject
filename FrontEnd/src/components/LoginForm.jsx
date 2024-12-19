@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 const LoginForm = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [currentUser, setCurrentUser] = useState(null);
     const [isVisible, setIsVisible] = useState(false); // State to control form visibility
+    const navigate = useNavigate()
 
     useEffect(() => {
         // Automatically show the form when the page loads
@@ -12,7 +14,8 @@ const LoginForm = () => {
         return () => clearTimeout(timeout);
     }, []);
 
-    const handleLogin = async () => {
+    const handleLogin = async (event) => {
+        event.preventDefault()
         try {
             const response = await fetch('./api/login', {
                 method: 'POST',
@@ -21,8 +24,9 @@ const LoginForm = () => {
                 },
                 body: JSON.stringify({ email, password })
             });
-            const data = await response.json();
-            setCurrentUser(data.user);
+            const user = await response.json();
+            setCurrentUser(user);
+            navigate('/dashboard')
         } catch (error) {
             console.error('Error logging in:', error);
         }
