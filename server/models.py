@@ -1,10 +1,10 @@
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.ext.associationproxy import association_proxy
-from datetime import date
+from datetime import date, datetime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import validates
 from config import db, bcrypt
-import re , datetime
+import re 
 
 class Goal(db.Model, SerializerMixin):
     __tablename__ = 'goals_table'
@@ -15,7 +15,7 @@ class Goal(db.Model, SerializerMixin):
     start_date =  db.Column(db.Date, default=date.today)
     end_date =  db.Column(db.Date)
     # if end_date < date.today status == 'inactive'
-    status = db.Column(db.String)
+    # status = db.Column(db.String)
     # categorical variables, need dropdown to select from
     metric_unit = db.Column(db.String)
     update_frequency = db.Column(db.String)

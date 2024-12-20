@@ -1,7 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext, createContext } from "react";
 import Bg2 from "./Bg2";
 import Bg3 from "./BG3.JSX";
 import { Navigate, useNavigate } from "react-router-dom";
+// import { UserContext } from './App';
+
+export const newUserContext = createContext({
+  currentUser: null,
+  setCurrentUser: () => {},
+});
 
 const Alert = ({ message, type, onClose }) => {
   return (
@@ -25,12 +31,28 @@ const SignUp = () => {
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [currentUser, setCurrentUser] = useState(null);
+  // const { currentUser, setCurrentUser } = useContext(UserContext);
   const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false); // State for submission process
   const [isVisible, setIsVisible] = useState(false); // State to control form visibility
   const [alert, setAlert] = useState(null); // Alert state
   const navigate = useNavigate()
+
+  const [newUSer, setNewUser] = useState(null);
+
+  async function check_session() {
+    const response = await fetch('./api/check_session');
+    if (response.status === 200) {
+      const data = await response.json();
+      setNewUser(data);
+    }
+  }
+
+  useEffect(() => {
+    check_session();
+  }, []);
+
+
 
   useEffect(() => {
     // Automatically show the form when the page loads
@@ -57,10 +79,10 @@ const SignUp = () => {
         },
         body: JSON.stringify({ email, phone, name, password }),
       });
-
+      console.log(response)
       if (response.ok) {
         const data = await response.json();
-        setCurrentUser(data);
+        setNewUser(data);
         setAlert({ message: "Sign-up successful!", type: "success" });
         navigate('/profile')
         setIsVisible(false); // Hide the form after submission
@@ -97,6 +119,7 @@ const SignUp = () => {
           <form
             onSubmit={handleSubmit}
             className="grid grid-cols-1 gap-6 sm:grid-cols-2"
+            autoComplete="on" // so browser can autofill this form
           >
             <img
               className="flex relative rounded-lg"
@@ -117,11 +140,13 @@ const SignUp = () => {
               </label>
               <input
                 id="name"
+                name="name" // adding this so that autocomplete works
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Enter your name"
                 className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 dark:bg-gray-900 dark:text-white"
+                autoComplete= "name" // providing autocomplete attribute
               />
             </div>
 
@@ -135,11 +160,13 @@ const SignUp = () => {
               </label>
               <input
                 id="email"
+                name= "email" // adding this so that autocomplete works
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Enter your email"
                 className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 dark:bg-gray-900 dark:text-white"
+                autoComplete= "email"// providing autocomplete attribute
               />
             </div>
 
@@ -153,11 +180,13 @@ const SignUp = () => {
               </label>
               <input
                 id="phone"
+                name= "phone" // adding this so that autocomplete works
                 type="tel"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
                 placeholder="Enter your phone number"
                 className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 dark:bg-gray-900 dark:text-white"
+                autoComplete="tel" // Providing autocomplete attribute
               />
             </div>
 
@@ -171,11 +200,13 @@ const SignUp = () => {
               </label>
               <input
                 id="password"
+                name= "password" // adding this so that autocomplete works can remove if we dont want users to autofill passwords
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Enter your password"
                 className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 dark:bg-gray-900 dark:text-white"
+                autoComplete="new-password" //PRoviding autocompelte attribute
               />
             </div>
 
@@ -189,11 +220,13 @@ const SignUp = () => {
               </label>
               <input
                 id="confirmPassword"
+                name = "confirmPassword" // adding this so that autocomplete works
                 type="password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 placeholder="Confirm your password"
                 className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 dark:bg-gray-900 dark:text-white"
+                autoComplete= "new-password" //Providing autocomplete attribute
               />
             </div>
 

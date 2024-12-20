@@ -1,7 +1,11 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import avatar4 from '../assets/avatar4.png'
+import { UserContext } from './App'
+
+
 
 function Profile() {
+  const { currentUser, setCurrentUser } = useContext(UserContext);
 
   function handleLogout() {
     setCurrentUser(null) // set current user to null to clear them out of state
