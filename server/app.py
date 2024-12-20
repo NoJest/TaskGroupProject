@@ -111,7 +111,6 @@ def edit_preferences(user_id):
         return {"status": 404, "message": "User not found"}, 404
     
 
-
 #authentication and user login
 @app.post('/api/users')
 def create_user():
@@ -173,8 +172,9 @@ def logout():
 
 
 # Goals CRUD
-@app.get('/api/users/<int:user_id>/goals')
-def get_goals_by_user(user_id):
+@app.get('/api/goals')
+def get_goals_by_user():
+    user_id=session.get('user_id')
     found_user_goals = find_goals_by_id(user_id) 
 
     if found_user_goals:
@@ -182,7 +182,7 @@ def get_goals_by_user(user_id):
     else:
         return { "status": 404, "message": "NOT FOUND" }, 404
 
-@app.post("/api/users/<int:user_id>/goals")
+@app.post("/api/goals")
 def create_new_user_goal():
     data = request.json
     
