@@ -15,7 +15,7 @@ class Goal(db.Model, SerializerMixin):
     start_date =  db.Column(db.Date, default=date.today)
     end_date =  db.Column(db.Date)
     # if end_date < date.today status == 'inactive'
-    status = db.Column(db.String)
+    # status = db.Column(db.String)
     # categorical variables, need dropdown to select from
     metric_unit = db.Column(db.String)
     update_frequency = db.Column(db.String)

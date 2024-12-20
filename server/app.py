@@ -177,18 +177,22 @@ def logout():
 
 
 # Goals CRUD
+# checked on POSTMAN - working
 @app.get('/api/goals')
 def get_goals_by_user():
-    user_id=session.get('user_id')
+    user_id=session.get('user_id') 
     found_user_goals = find_goals_by_id(user_id) 
 
     if found_user_goals:
-        return found_user_goals.to_dict(), 200
+        goals_dict = [goal.to_dict(rules = ['-user.preferences',]) for goal in found_user_goals]
+        return goals_dict, 200
     else:
         return { "status": 404, "message": "NOT FOUND" }, 404
 
+# checked on POSTMAN - working
 @app.post("/api/goals")
 def create_new_user_goal():
+    user_id=session.get('user_id')
     data = request.json
     
     try: 
@@ -196,13 +200,13 @@ def create_new_user_goal():
                         description = data.get('description'),
                         start_date = data.get('start_date'),
                         end_date = data.get('end_date'),
-                        status = data.get('status'),
-                        unit = data.get('unit'),
-                        frequency = data.get('frequency'),
+                        metric_unit = data.get('unit'),
+                        update_frequency = data.get('frequency'),
                         goal_target = data.get('goal_target'),
                         alert_time = data.get('alert_time'),
                         phone_alert = data.get('phone_alert'),
-                        email_alert = data.get('email_alert'))
+                        email_alert = data.get('email_alert'),
+                        user_id = user_id)
         db.session.add(new_goal)
         db.session.commit()
         return new_goal.to_dict(), 201
@@ -213,6 +217,7 @@ def create_new_user_goal():
                "error_text": str(error)
                }, 400
 
+# checked on POSTMAN - working
 @app.patch("/api/goals/<int:id>")
 def edit_goal(id):
     goal = Goal.query.get(id)
@@ -234,6 +239,7 @@ def edit_goal(id):
     else:
         return {"status": 404, "message": "Goal not found"}, 404
 
+# checked on POSTMAN - working
 @app.delete("/api/goals/<int:id>")
 def delete_goal(id):
     goal = Goal.query.get(id)
@@ -253,7 +259,8 @@ def get_progress_updates(goal_id):
     found_progress_updates = find_updates_by_id(goal_id) 
 
     if found_progress_updates: 
-        return found_progress_updates.to_dict(), 200
+        progress_updates_dict = [progress_update.to_dict() for progress_update in found_progress_updates]
+        return progress_updates_dict, 200
     else: 
         return { "status": 404, "message": "NOT FOUND"}, 404
 
