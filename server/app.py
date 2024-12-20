@@ -46,7 +46,9 @@ def create_new_preferences():
             commitment_time= data.get('commitment_time'),
             career_path = data.get('career_path'),
             avatar = data.get('avatar'),
+            mood = data.get("mood"),
             user_id = user_id
+            
         )
         
         db.session.add(new_preferences)
