@@ -1,9 +1,13 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, createContext } from "react";
 import Bg2 from "./Bg2";
 import Bg3 from "./BG3.JSX";
 import { Navigate, useNavigate } from "react-router-dom";
-import { UserContext } from './App';
+// import { UserContext } from './App';
 
+export const newUserContext = createContext({
+  currentUser: null,
+  setCurrentUser: () => {},
+});
 
 const Alert = ({ message, type, onClose }) => {
   return (
@@ -27,12 +31,28 @@ const SignUp = () => {
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const { currentUser, setCurrentUser } = useContext(UserContext);
+  // const { currentUser, setCurrentUser } = useContext(UserContext);
   const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false); // State for submission process
   const [isVisible, setIsVisible] = useState(false); // State to control form visibility
   const [alert, setAlert] = useState(null); // Alert state
   const navigate = useNavigate()
+
+  const [newUSer, setNewUser] = useState(null);
+
+  async function check_session() {
+    const response = await fetch('./api/check_session');
+    if (response.status === 200) {
+      const data = await response.json();
+      setNewUser(data);
+    }
+  }
+
+  useEffect(() => {
+    check_session();
+  }, []);
+
+
 
   useEffect(() => {
     // Automatically show the form when the page loads
@@ -59,10 +79,10 @@ const SignUp = () => {
         },
         body: JSON.stringify({ email, phone, name, password }),
       });
-
+      console.log(response)
       if (response.ok) {
         const data = await response.json();
-        setCurrentUser(data);
+        setNewUser(data);
         setAlert({ message: "Sign-up successful!", type: "success" });
         navigate('/profile')
         setIsVisible(false); // Hide the form after submission
