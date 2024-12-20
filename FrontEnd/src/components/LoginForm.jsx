@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext }  from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
+import { UserContext } from './App';
+
 
 const LoginForm = () => {
+
+    const { currentUser, setCurrentUser } = useContext(UserContext);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [currentUser, setCurrentUser] = useState(null);
     const [isVisible, setIsVisible] = useState(false); // State to control form visibility
     const navigate = useNavigate()
 
@@ -32,6 +35,8 @@ const LoginForm = () => {
         }
     };
 
+
+    if (!currentUser) {
     return (
         <section 
             className={`relative m-60 flex gap-10 items-center max-w-4xl mx-auto bg-white rounded-lg shadow-lg dark:bg-gray-800 hover:shadow-inner transition-opacity duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
@@ -69,7 +74,15 @@ const LoginForm = () => {
                 </button>
             </form>
         </section>
-    );
-};
-
+        );
+    } else {
+        return (
+            <UserContext.Provider value={{ currentUser, setCurrentUser }}>
+              <div>
+                <Dashboard />
+              </div>
+            </UserContext.Provider>
+          );
+    }
+}
 export default LoginForm;

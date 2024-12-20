@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Bg2 from "./Bg2";
 import Bg3 from "./BG3.JSX";
 import { Navigate, useNavigate } from "react-router-dom";
+import { UserContext } from './App';
+
 
 const Alert = ({ message, type, onClose }) => {
   return (
@@ -25,7 +27,7 @@ const SignUp = () => {
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [currentUser, setCurrentUser] = useState(null);
+  const { currentUser, setCurrentUser } = useContext(UserContext);
   const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false); // State for submission process
   const [isVisible, setIsVisible] = useState(false); // State to control form visibility
