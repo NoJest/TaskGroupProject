@@ -18,8 +18,10 @@ def find_updates_by_id(goal_id):
 
 # Preferences
 #get request
-@app.get("/api/preferences/<int:user_id>")
-def get_preferences_by_id(user_id):
+@app.get("/api/preferences")
+def get_preferences_by_id():
+    #session to find user id
+    user_id=session.get('user_id')
     #1 find user with that id
     found_user = find_user_by_id(user_id)
     #if user exists return there preferences
@@ -77,8 +79,9 @@ def create_new_preferences():
 #         return {"status": 404, "message": "NOT FOUND" }, 404
     
 #patch request
-@app.patch('/api/preferences/<int:user_id>')
-def edit_preferences(user_id):
+@app.patch('/api/preferences')
+def edit_preferences():
+    user_id=session.get('user_id')
     found_user= find_user_by_id(user_id)
     
     if found_user:
