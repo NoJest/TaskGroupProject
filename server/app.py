@@ -35,15 +35,16 @@ def get_preferences_by_id(user_id):
     else:
         return "User not found", 404
 #post request 
-@app.post('/api/preferences/<int:user_id>')
+@app.post('/api/preferences')
 def create_new_preferences():
+    user_id=session.get('user_id')
     data = request.json
     try: 
         new_preferences = Preference(
             commitment_time= data.get('commitment_time'),
             career_path = data.get('career_path'),
             avatar = data.get('avatar'),
-            user_id = data.get('user_id')
+            user_id = user_id
         )
         
         db.session.add(new_preferences)
