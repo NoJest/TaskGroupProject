@@ -18,12 +18,13 @@ const PopUpProfile = () => {
 
 
 async function check_session() {
-  const response = await fetch('./api/check_session')
+  const response = await fetch('/api/check_session')
   if (response.status === 200) {
     const data = await response.json()
     setCurrentUser(data)
 
   }
+  // use nav home
   
 }
 
@@ -85,7 +86,7 @@ useEffect(()=>{
   });
   const handleSubmit = async () => {
     // Add logic to send data to backend
-      const response = await fetch('/api/preferences/<int:user_id>', {
+      const response = await fetch('/api/preferences', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -151,19 +152,35 @@ useEffect(()=>{
                   className="w-full border rounded p-2 focus:ring focus:ring-blue-300"
                 />
               </div>
-              <div className="mb-4">
-                <label className="block text-sm font-medium mb-1">Notification Type</label>
-                <select
-                  name="notificationType"
-                  value={formData.notificationType}
-                  onChange={handleChange}
-                  className="w-full border rounded p-2 focus:ring focus:ring-blue-300"
-                >
-                  <option value="">Select</option>
-                  <option value="email">Email</option>
-                  <option value="phone">Phone</option>
-                </select>
-              </div>
+              <h2 className="text-lg font-bold mb-4">Notification Preferences</h2>
+
+      <div className="flex items-center gap-2 mb-3">
+        <input
+          type="checkbox"
+          id="email"
+          name="email"
+          checked={notificationTypes.email}
+          onChange={handleCheckboxChange}
+          className="w-5 h-5 accent-blue-500"
+        />
+        <label htmlFor="email" className="text-sm">
+          Email
+        </label>
+      </div>
+
+      <div className="flex items-center gap-2 mb-3">
+        <input
+          type="checkbox"
+          id="phone"
+          name="phone"
+          checked={notificationTypes.phone}
+          onChange={handleCheckboxChange}
+          className="w-5 h-5 accent-green-500"
+        />
+        <label htmlFor="phone" className="text-sm">
+          Phone
+        </label>
+      </div>
               <div className="mb-4">
                 <label className="block text-sm font-medium mb-1">Mood</label>
                 <input
