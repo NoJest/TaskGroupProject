@@ -1,7 +1,6 @@
 import React, {useContext} from 'react'
 import avatar4 from '../assets/avatar4.png'
 import { UserContext } from './App'
-import {useContext} from 'react'
 
 
 function Profile() {

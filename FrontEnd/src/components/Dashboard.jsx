@@ -2,7 +2,6 @@
 import React, {useState, useEffect} from "react";
 import App, { UserContext } from './App'
 import {useContext} from 'react'
-import React from "react";
 import Profile from "./Profile";
 import SideMenu from "./SideMenu";
 import Calendar from "./dashboard/Calendar";

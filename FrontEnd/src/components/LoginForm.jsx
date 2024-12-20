@@ -19,20 +19,20 @@ const LoginForm = () => {
 
     const handleLogin = async (event) => {
         event.preventDefault()
-        try {
-            const response = await fetch('./api/login', {
+            const response = await fetch('/api/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({ email, password })
             });
-            const user = await response.json();
-            setCurrentUser(user);
-            navigate('/dashboard')
-        } catch (error) {
-            console.error('Error logging in:', error);
-        }
+            
+            if (response.ok){
+                const user = await response.json()
+                setCurrentUser(user)
+              }else{
+                alert("invalid username and password")
+              }
     };
 
 
@@ -79,7 +79,7 @@ const LoginForm = () => {
         return (
             <UserContext.Provider value={{ currentUser, setCurrentUser }}>
               <div>
-                <Dashboard />
+                <Dashboard  setCurrentUser={currentUser} currentUser={currentUser}/>
               </div>
             </UserContext.Provider>
           );
