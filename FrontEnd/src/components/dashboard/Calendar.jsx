@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
@@ -32,7 +31,7 @@ const Calendar = () => {
   }, []);
 
   return (
-    <div className="absolute bottom-5 right-4 transform scale-70 z-10" style={{ width: '33.33vw', height: '33.33vh', overflow: 'hidden' }}>
+    <div className="bg-white p-6 rounded-lg shadow-md h-full min-h-[350px]" style={{ width: '33.33vw', height: '33.33vh', overflow: 'hidden' }}>
       <FullCalendar
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
         initialView="dayGridMonth"

@@ -19,7 +19,7 @@ function Profile() {
     <div className="absolute top-4 left-60 ransform -translate-x-1/2 z-10 flex justify-center items-start w-full px-4">
   <div className="gap-5 mt-5 max-w-lg">
     {/* User */}
-    <div className="bg-white p-6 rounded-lg shadow-lg flex-1 min-h-[300px]">
+    <div className="bg-white/30 p-6 rounded-lg shadow-lg flex-1 min-h-[700px]">
       <div className="flex items-center gap-4 mb-4">
         {/* Avatar */}
         <div className="flex items-center gap-x-2">

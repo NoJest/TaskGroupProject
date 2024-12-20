@@ -18,8 +18,10 @@ def find_updates_by_id(goal_id):
 
 # Preferences
 #get request
-@app.get("/api/preferences/<int:user_id>")
-def get_preferences_by_id(user_id):
+@app.get("/api/preferences")
+def get_preferences_by_id():
+    #session to find user id
+    user_id=session.get('user_id')
     #1 find user with that id
     found_user = find_user_by_id(user_id)
     #if user exists return there preferences
@@ -37,14 +39,14 @@ def get_preferences_by_id(user_id):
 #post request 
 @app.post('/api/preferences')
 def create_new_preferences():
-    user_id = session.get('user_id') # would this work? is the user signed in?
+    user_id=session.get('user_id')
     data = request.json
     try: 
         new_preferences = Preference(
             commitment_time= data.get('commitment_time'),
             career_path = data.get('career_path'),
             avatar = data.get('avatar'),
-            user_id = data.get('user_id')
+            user_id = user_id
         )
         
         db.session.add(new_preferences)
@@ -77,8 +79,9 @@ def create_new_preferences():
 #         return {"status": 404, "message": "NOT FOUND" }, 404
     
 #patch request
-@app.patch('/api/preferences/<int:user_id>')
-def edit_preferences(user_id):
+@app.patch('/api/preferences')
+def edit_preferences():
+    user_id=session.get('user_id')
     found_user= find_user_by_id(user_id)
     
     if found_user:
@@ -110,7 +113,6 @@ def edit_preferences(user_id):
     else:
         return {"status": 404, "message": "User not found"}, 404
     
-
 
 #authentication and user login
 @app.post('/api/users')
@@ -173,8 +175,9 @@ def logout():
 
 
 # Goals CRUD
-@app.get('/api/users/<int:user_id>/goals')
-def get_goals_by_user(user_id):
+@app.get('/api/goals')
+def get_goals_by_user():
+    user_id=session.get('user_id')
     found_user_goals = find_goals_by_id(user_id) 
 
     if found_user_goals:
@@ -182,7 +185,7 @@ def get_goals_by_user(user_id):
     else:
         return { "status": 404, "message": "NOT FOUND" }, 404
 
-@app.post("/api/users/<int:user_id>/goals")
+@app.post("/api/goals")
 def create_new_user_goal():
     data = request.json
     
