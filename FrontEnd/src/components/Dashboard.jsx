@@ -8,6 +8,7 @@ import Calendar from "./dashboard/Calendar";
 import ProgressUpdate from "./dashboard/ProgressUpdate";
 import Goal from "./dashboard/Goal";
 import AiBot from "./dashboard/AiBot"
+import AlertButton from "./dashboard/AlertButton"
 import DB from "./DB";
 
 const Dashboard = () => {
@@ -51,6 +52,7 @@ if (!currentUser) { // Signup & Login if no currentUser
               <Goal />
             </div>
           </div>
+      {/* <AlertButton /> */}
            
           <div className="flex flex-row gap-6">
             <Calendar className="flex-1" />

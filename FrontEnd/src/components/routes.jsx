@@ -7,8 +7,6 @@ import Home from './Home';
 import PopUpProfile from './PopUpProfile'
 
 
-
-
 const routes = [
     {
         path: "/dashboard",

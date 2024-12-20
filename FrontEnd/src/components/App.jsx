@@ -1,7 +1,7 @@
 import { Link, Outlet } from 'react-router-dom'
 import Home from './Home';
-import { useLocation } from "react-router-dom";
 import Bg1 from './BG1';
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Dashboard from './Dashboard';
 import React, { createContext, useContext, useState, useEffect } from "react";
 
@@ -11,6 +11,7 @@ export const UserContext = createContext({
   currentUser: null,
   setCurrentUser: () => {},
 });
+
 
 
 function App() {
