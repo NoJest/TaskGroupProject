@@ -10,9 +10,8 @@ function Profile() {
     })
   }
 
-
   return (
-    <div className="absolute top-4 left-60 ransform -translate-x-1/2 z-10 flex justify-center items-start w-full px-4">
+    <div className="absolute top-4 left-60 ransform -translate-x-1/2 z-5 flex justify-center items-start w-full px-4">
   <div className="gap-5 mt-5 max-w-lg">
     {/* User */}
     <div className="bg-white/30 p-6 rounded-lg shadow-lg flex-1 min-h-[700px]">
@@ -35,7 +34,7 @@ function Profile() {
       <p className="text-sm text-gray-500 mb-4">Username</p>
       <p className="text-gray-500 font-medium mb-2">Career path:</p>
       <p className="text-gray-500 font-medium mb-2">Commitment time:</p>
-      <p className="text-gray-500 font-medium mb-2">Mood</p>
+      <p className="text-gray-500 font-medium mb-2">Mood:</p>
 
       <div className="px-4 py-2.5 w-36 mt-5 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-md hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40">
         <button onClick={handleLogout}>Logout</button>

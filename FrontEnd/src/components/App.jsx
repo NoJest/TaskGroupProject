@@ -1,7 +1,7 @@
 import { Link, Outlet } from 'react-router-dom'
 import Home from './Home';
-import { useLocation } from "react-router-dom";
 import Bg1 from './BG1';
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 
 
 function App() {
