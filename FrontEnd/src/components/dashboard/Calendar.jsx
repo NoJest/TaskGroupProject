@@ -31,7 +31,7 @@ const Calendar = () => {
   }, []);
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow-md h-full" style={{ width: '33.33vw', height: '33.33vh', overflow: 'hidden' }}>
+    <div className="bg-white p-6 rounded-lg shadow-md h-full min-h-[350px]" style={{ width: '33.33vw', height: '33.33vh', overflow: 'hidden' }}>
       <FullCalendar
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
         initialView="dayGridMonth"

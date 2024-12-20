@@ -14,6 +14,7 @@ function Goal() {
       <p className="text-sm text-gray-500 mb-4">Start date - End date</p>
       <ScheduleCard time="01:00" text="Task 1" />
       <ScheduleCard time="10:30" text="Task 2" />
+      <ScheduleCard time="10:30" text="Task 3" />
     </div>
   );
 }
