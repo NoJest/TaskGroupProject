@@ -30,11 +30,24 @@ const PopUpProfile = ({}) => {
     goalTarget: '',
   });
 
+  const [notificationTypes, setNotificationTypes] = useState({ 
+    email: false,
+    phone:false
+  })
+
+  const avatars = [
+    avatar1,
+    avatar2,
+    avatar3,
+    avatar4
+  ];
+
   const navigate = useNavigate();
 
   const avatars = [avatar1, avatar2, avatar3, avatar4];
 
  
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;

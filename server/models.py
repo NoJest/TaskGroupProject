@@ -1,10 +1,10 @@
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.ext.associationproxy import association_proxy
-from datetime import date
+from datetime import date, datetime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import validates
 from config import db, bcrypt
-import re , datetime
+import re 
 
 class Goal(db.Model, SerializerMixin):
     __tablename__ = 'goals_table'

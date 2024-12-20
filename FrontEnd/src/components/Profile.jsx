@@ -3,6 +3,7 @@ import avatar4 from '../assets/avatar4.png'
 import { UserContext } from './App'
 
 
+
 function Profile() {
   const { currentUser, setCurrentUser } = useContext(UserContext);
 
