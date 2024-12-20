@@ -142,7 +142,7 @@ class Preference(db.Model, SerializerMixin):
     commitment_time = db.Column(db.String)
     career_path = db.Column(db.String)
     avatar = db.Column (db.String, nullable =True)
-    # mood = db.Column(db.String)
+    mood = db.Column(db.String, nullable= True)
     # Stretch goal
     
     #foreign keys
