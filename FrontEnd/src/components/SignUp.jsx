@@ -99,6 +99,7 @@ const SignUp = () => {
           <form
             onSubmit={handleSubmit}
             className="grid grid-cols-1 gap-6 sm:grid-cols-2"
+            autoComplete="on" // so browser can autofill this form
           >
             <img
               className="flex relative rounded-lg"
@@ -119,11 +120,13 @@ const SignUp = () => {
               </label>
               <input
                 id="name"
+                name="name" // adding this so that autocomplete works
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Enter your name"
                 className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 dark:bg-gray-900 dark:text-white"
+                autoComplete= "name" // providing autocomplete attribute
               />
             </div>
 
@@ -137,11 +140,13 @@ const SignUp = () => {
               </label>
               <input
                 id="email"
+                name= "email" // adding this so that autocomplete works
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Enter your email"
                 className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 dark:bg-gray-900 dark:text-white"
+                autoComplete= "email"// providing autocomplete attribute
               />
             </div>
 
@@ -155,11 +160,13 @@ const SignUp = () => {
               </label>
               <input
                 id="phone"
+                name= "phone" // adding this so that autocomplete works
                 type="tel"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
                 placeholder="Enter your phone number"
                 className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 dark:bg-gray-900 dark:text-white"
+                autoComplete="tel" // Providing autocomplete attribute
               />
             </div>
 
@@ -173,11 +180,13 @@ const SignUp = () => {
               </label>
               <input
                 id="password"
+                name= "password" // adding this so that autocomplete works can remove if we dont want users to autofill passwords
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Enter your password"
                 className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 dark:bg-gray-900 dark:text-white"
+                autoComplete="new-password" //PRoviding autocompelte attribute
               />
             </div>
 
@@ -191,11 +200,13 @@ const SignUp = () => {
               </label>
               <input
                 id="confirmPassword"
+                name = "confirmPassword" // adding this so that autocomplete works
                 type="password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 placeholder="Confirm your password"
                 className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 dark:bg-gray-900 dark:text-white"
+                autoComplete= "new-password" //Providing autocomplete attribute
               />
             </div>
 

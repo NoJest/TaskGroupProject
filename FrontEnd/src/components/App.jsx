@@ -17,7 +17,7 @@ function App() {
   const [currentUser, setCurrentUser] = useState(null);
 
   async function check_session() {
-    const response = await fetch('./api/check_session');
+    const response = await fetch('/api/check_session');
     if (response.status === 200) {
       const data = await response.json();
       setCurrentUser(data);

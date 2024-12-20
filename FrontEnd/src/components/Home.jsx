@@ -28,14 +28,14 @@ function Home({}) {
     <h1 className="text-4xl my-10 font-bold text-neutral-50 border-emerald-200">Welcome to Task Master Pro</h1>
     <br/>
     <hr/>
-  <Link to='./login'>
+  <Link to='/login'>
     <button className="w-40 rounded-lg p-3 m-2 mx-30 font-bold transition-all duration-100 border-2 active:scale-[0.98]
 bg-${color}-500 hover:bg-amber-200 hover:text-amber-700">
     Login
   </button>
   </Link>
   
-  <Link to='./signUp'>
+  <Link to='/signUp'>
   <button className="w-40 rounded-lg p-3 m-2 font-bold transition-all duration-100 border-2 active:scale-[0.98]bg-${color}-500 hover:bg-amber-500 hover:text-white">
     Sign Up
   </button>

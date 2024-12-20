@@ -49,6 +49,11 @@ useEffect(()=>{
     goalTarget: '',
   });
 
+  const [notificationTypes, setNotificationTypes] = useState({ 
+    email: false,
+    phone:false
+  })
+
   const avatars = [
     avatar1,
     avatar2,
