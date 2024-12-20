@@ -66,6 +66,6 @@ if (!currentUser) { // Signup & Login if no currentUser
     </div>
   );
 };
-
+}
 export default Dashboard;
 
